@@ -37,7 +37,13 @@ var APP_DATA = {
           "yaw": 0.7620877005955471,
           "pitch": 0.20464767970092979,
           "rotation": 0,
-          "target": "1-2-the-scourging-at-the-pillar"
+          "target": "2-2-the-scourging-at-the-pillar"
+        },
+        {
+          "yaw": 0.40301458552320213,
+          "pitch": 0.10784171121308184,
+          "rotation": 0,
+          "target": "1-the-agony-in-the-garden---copy"
         }
       ],
       "infoHotspots": [
@@ -50,7 +56,49 @@ var APP_DATA = {
       ]
     },
     {
-      "id": "1-2-the-scourging-at-the-pillar",
+      "id": "1-the-agony-in-the-garden---copy",
+      "name": "The Agony in the Garden - Copy",
+      "levels": [
+        {
+          "tileSize": 256,
+          "size": 256,
+          "fallbackOnly": true
+        },
+        {
+          "tileSize": 512,
+          "size": 512
+        },
+        {
+          "tileSize": 512,
+          "size": 1024
+        },
+        {
+          "tileSize": 512,
+          "size": 2048
+        },
+        {
+          "tileSize": 512,
+          "size": 4096
+        }
+      ],
+      "faceSize": 4096,
+      "initialViewParameters": {
+        "pitch": 0,
+        "yaw": 0,
+        "fov": 1.5707963267948966
+      },
+      "linkHotspots": [
+        {
+          "yaw": 0.37256950433723546,
+          "pitch": 0.07226227572406074,
+          "rotation": 0,
+          "target": "0-1-the-agony-in-the-garden"
+        }
+      ],
+      "infoHotspots": []
+    },
+    {
+      "id": "2-2-the-scourging-at-the-pillar",
       "name": "2. The Scourging at the Pillar",
       "levels": [
         {
@@ -86,7 +134,7 @@ var APP_DATA = {
           "yaw": 0.03732539266628443,
           "pitch": -0.10001596075944796,
           "rotation": 0,
-          "target": "2-3-crowning-with-thorns"
+          "target": "3-3-crowning-with-thorns"
         },
         {
           "yaw": -2.352292590955379,
@@ -105,7 +153,7 @@ var APP_DATA = {
       ]
     },
     {
-      "id": "2-3-crowning-with-thorns",
+      "id": "3-3-crowning-with-thorns",
       "name": "3. Crowning with Thorns",
       "levels": [
         {
@@ -141,13 +189,13 @@ var APP_DATA = {
           "yaw": -0.7806589727883413,
           "pitch": -0.07899997168400219,
           "rotation": 0,
-          "target": "3-4-the-carrying-of-the-cross"
+          "target": "4-4-the-carrying-of-the-cross"
         },
         {
           "yaw": 3.1209863822329336,
           "pitch": -0.12828587764548516,
           "rotation": 0,
-          "target": "1-2-the-scourging-at-the-pillar"
+          "target": "2-2-the-scourging-at-the-pillar"
         }
       ],
       "infoHotspots": [
@@ -160,7 +208,7 @@ var APP_DATA = {
       ]
     },
     {
-      "id": "3-4-the-carrying-of-the-cross",
+      "id": "4-4-the-carrying-of-the-cross",
       "name": "4. The Carrying of the Cross",
       "levels": [
         {
@@ -196,13 +244,13 @@ var APP_DATA = {
           "yaw": 2.9907525571087445,
           "pitch": -0.43353448405620476,
           "rotation": 0,
-          "target": "4-5-the-crucifixion-of-jesus"
+          "target": "5-5-the-crucifixion-of-jesus"
         },
         {
           "yaw": -1.9497772696554847,
           "pitch": 0.30493260944028755,
           "rotation": 0,
-          "target": "2-3-crowning-with-thorns"
+          "target": "3-3-crowning-with-thorns"
         }
       ],
       "infoHotspots": [
@@ -215,7 +263,7 @@ var APP_DATA = {
       ]
     },
     {
-      "id": "4-5-the-crucifixion-of-jesus",
+      "id": "5-5-the-crucifixion-of-jesus",
       "name": "5. The Crucifixion of Jesus",
       "levels": [
         {
@@ -251,7 +299,7 @@ var APP_DATA = {
           "yaw": 2.8831040737467255,
           "pitch": 0.37172238316890116,
           "rotation": 0,
-          "target": "3-4-the-carrying-of-the-cross"
+          "target": "4-4-the-carrying-of-the-cross"
         }
       ],
       "infoHotspots": [
@@ -268,7 +316,7 @@ var APP_DATA = {
   "settings": {
     "mouseViewMode": "drag",
     "autorotateEnabled": true,
-    "fullscreenButton": false,
-    "viewControlButtons": false
+    "fullscreenButton": true,
+    "viewControlButtons": true
   }
 };
