@@ -42,8 +42,8 @@ var APP_DATA = {
       ],
       "infoHotspots": [
         {
-          "yaw": 0.8415652593333931,
-          "pitch": -0.1911421220957763,
+          "yaw": 0.8315975342972379,
+          "pitch": -0.1932127154048935,
           "title": "<font face=\"Helvetica Neue, Helvetica, Arial, sans-serif\">Gethsemane</font>",
           "text": "Then Jesus went with his disciples to a place called Gethsemane, and he said to them, “Sit here while I go over there and pray.” He took Peter and the two sons of Zebedee along with him, and he began to be sorrowful and troubled. Then he said to them, “My soul is overwhelmed with sorrow to the point of death. Stay here and keep watch with me.”<div><br></div><div>Going a little farther, he fell with his face to the ground and prayed, “My Father, if it is possible, may this cup be taken from me. Yet not as I will, but as you will.”</div><div><br></div><div>Then he returned to his disciples and found them sleeping. “Couldn’t you men keep watch with me for one hour?” he asked Peter. “Watch and pray so that you will not fall into temptation. The spirit is willing, but the flesh is weak.”</div><div><br></div><div>He went away a second time and prayed, “My Father, if it is not possible for this cup to be taken away unless I drink it, may your will be done.”</div><div><br></div><div>When he came back, he again found them sleeping, because their eyes were heavy. So he left them and went away once more and prayed the third time, saying the same thing.</div><div><br></div><div>Then he returned to the disciples and said to them, “Are you still sleeping and resting? Look, the hour has come, and the Son of Man is delivered into the hands of sinners. Rise! Let us go! Here comes my betrayer!”</div><div>(Matthew 26:36-46)</div>"
         }
@@ -97,8 +97,8 @@ var APP_DATA = {
       ],
       "infoHotspots": [
         {
-          "yaw": 0.0001156668378552439,
-          "pitch": -0.44326894041162035,
+          "yaw": -0.0021049083788469147,
+          "pitch": -0.4432680786781624,
           "title": "Jesus Before Pilate",
           "text": "Very early in the morning, the chief priests, with the elders, the teachers of the law and the whole Sanhedrin, made their plans. So they bound Jesus, led him away and handed him over to Pilate.<div><br></div><div>“Are you the king of the Jews?” asked Pilate.</div><div><br></div><div>“You have said so,” Jesus replied.</div><div><br></div><div>The chief priests accused him of many things. So again Pilate asked him, “Aren’t you going to answer? See how many things they are accusing you of.”</div><div><br></div><div>But Jesus still made no reply, and Pilate was amazed.</div><div><br></div><div>Now it was the custom at the festival to release a prisoner whom the people requested. A man called Barabbas was in prison with the insurrectionists who had committed murder in the uprising. The crowd came up and asked Pilate to do for them what he usually did.</div><div><br></div><div>“Do you want me to release to you the king of the Jews?” asked Pilate, knowing it was out of self-interest that the chief priests had handed Jesus over to him. But the chief priests stirred up the crowd to have Pilate release Barabbas instead.</div><div><br></div><div>“What shall I do, then, with the one you call the king of the Jews?” Pilate asked them.</div><div><br></div><div>“Crucify him!” they shouted.</div><div><br></div><div>“Why? What crime has he committed?” asked Pilate.</div><div><br></div><div>But they shouted all the louder, “Crucify him!”</div><div><br></div><div>Wanting to satisfy the crowd, Pilate released Barabbas to them. He had Jesus flogged, and handed him over to be crucified.</div><div>(Mark 15:1-15)</div>"
         }
