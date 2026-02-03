@@ -131,7 +131,7 @@
     gap: 10px;
   }
 
-  /* ✅ NEW: only hide/show these controls, not the Audio handle */
+  /* ✅ only hide/show these controls, not the Audio handle */
   .player.controls-hidden .controls-main {
     opacity: 0;
     visibility: hidden;
@@ -387,6 +387,9 @@
   let currentIndex = 0;
   let dragging = false;
 
+  // ✅ NEW: track first user interaction for click-to-play
+  let userHasInteracted = false;
+
   // ✅ Hide controls helper (keeps handle visible)
   function hideControls() {
     player.classList.add("controls-hidden");
@@ -400,6 +403,36 @@
     hidden ? showControls() : hideControls();
   }
 
+  // ✅ Icon helpers
+  function setPlayIcon() {
+    playIcon.className = "play-icon";
+    playIcon.innerHTML = "";
+  }
+  function setPauseIcon() {
+    playIcon.className = "pause-icon";
+    playIcon.innerHTML = "<span></span><span></span>";
+  }
+
+  // ✅ Load track WITHOUT autoplay (triangle icon by default)
+  function loadTrack(i) {
+    currentIndex = i;
+    audio.src = tracks[i].src;
+    audio.load();       // preload only
+    setPlayIcon();      // triangle until audio actually plays
+  }
+
+  // ✅ Play/pause button sets interaction + icons
+  function playPause() {
+    userHasInteracted = true;
+
+    if (audio.paused) {
+      audio.play().then(() => setPauseIcon()).catch(() => {});
+    } else {
+      audio.pause();
+      setPlayIcon();
+    }
+  }
+
   Promise.all(tracks.map(t => new Promise(res => {
     const a = new Audio(t.src);
     a.onloadedmetadata = () => res(a.duration);
@@ -408,11 +441,7 @@
     offsets = times.map((_, i) => times.slice(0, i).reduce((a, b) => a + b, 0));
     totalDuration = times.reduce((a, b) => a + b, 0);
     drawMarkers();
-    loadTrack(0);
-
-    audio.play().catch(() => {
-      document.addEventListener("click", () => audio.play(), { once: true });
-    });
+    loadTrack(0); // ✅ stays paused with triangle icon
   });
 
   function drawMarkers() {
@@ -424,40 +453,32 @@
     });
   }
 
-  function loadTrack(i) {
-    currentIndex = i;
-    audio.src = tracks[i].src;
-    audio.play();
-    setPauseIcon();
-  }
-
-  function playPause() {
-    audio.paused ? (audio.play(), setPauseIcon()) : (audio.pause(), setPlayIcon());
-  }
-
-  function setPlayIcon() {
-    playIcon.className = "play-icon";
-    playIcon.innerHTML = "";
-  }
-
-  function setPauseIcon() {
-    playIcon.className = "pause-icon";
-    playIcon.innerHTML = "<span></span><span></span>";
-  }
-
   audio.addEventListener("timeupdate", () => {
     const globalTime = offsets[currentIndex] + audio.currentTime;
     progress.style.width = `${(globalTime / totalDuration) * 100}%`;
+
     if (audio.currentTime >= audio.duration && currentIndex < tracks.length - 1) {
+      // Auto-advance. If already playing, continue playing; if paused, stay paused.
+      const wasPlaying = !audio.paused;
       loadTrack(currentIndex + 1);
+      if (wasPlaying) {
+        audio.play().then(() => setPauseIcon()).catch(() => {});
+      }
     }
   });
 
   function seekTo(percent) {
     const targetTime = percent * totalDuration;
     const index = offsets.findIndex((o, i) => targetTime < o + durations[i]);
+
+    const wasPlaying = !audio.paused;
     loadTrack(index);
     audio.currentTime = targetTime - offsets[index];
+
+    // Keep state: if was playing, keep playing after seek
+    if (wasPlaying) {
+      audio.play().then(() => setPauseIcon()).catch(() => {});
+    }
   }
 
   function handleSeek(clientX) {
@@ -493,24 +514,30 @@
     volumeContainer.classList.toggle("open");
   }
 
-  // ✅ Clicking the "••• Audio" only toggles main controls (handle remains)
+  // ✅ Clicking the "••• Audio" toggles main controls only (handle remains)
   playerHandle.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleControls();
   });
 
-  // ✅ Clicking anywhere on screen hides main controls (handle stays)
-  document.addEventListener("click", () => {
-    hideControls();
-  });
-
-  // ✅ Clicking inside controls should NOT trigger document click-hide
+  // ✅ Clicking inside controls should NOT hide them
   controlsMain.addEventListener("click", (e) => {
     e.stopPropagation();
+  });
+
+  // ✅ Clicking anywhere on screen:
+  // 1) auto-start audio on first interaction
+  // 2) hide the controls (handle stays)
+  document.addEventListener("click", () => {
+    if (!userHasInteracted) {
+      userHasInteracted = true;
+      if (audio.paused) {
+        audio.play().then(() => setPauseIcon()).catch(() => {});
+      }
+    }
+    hideControls();
   });
 </script>
 
 </body>
 </html>
-
-
