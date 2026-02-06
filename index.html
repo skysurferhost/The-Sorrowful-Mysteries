@@ -386,8 +386,12 @@
   let currentIndex = 0;
   let dragging = false;
 
-  // ✅ NEW: track first user interaction for click-to-play
+  // ✅ track first user interaction for click-to-play
   let userHasInteracted = false;
+
+  // ✅ track whether we should autoplay next track
+  // (true if user has started playback)
+  let shouldAutoplayNext = false;
 
   // ✅ Hide controls helper (keeps handle visible)
   function hideControls() {
@@ -412,21 +416,28 @@
     playIcon.innerHTML = "<span></span><span></span>";
   }
 
-  // ✅ Load track WITHOUT autoplay (triangle icon by default)
-  function loadTrack(i) {
+  // ✅ Load track (optionally autoplay)
+  function loadTrack(i, autoplay = false) {
     currentIndex = i;
     audio.src = tracks[i].src;
-    audio.load();       // preload only
-    setPlayIcon();      // triangle until audio actually plays
+    audio.load();
+
+    if (autoplay) {
+      audio.play().then(() => setPauseIcon()).catch(() => setPlayIcon());
+    } else {
+      setPlayIcon();
+    }
   }
 
-  // ✅ Play/pause button sets interaction + icons
+  // ✅ Play/pause button
   function playPause() {
     userHasInteracted = true;
 
     if (audio.paused) {
+      shouldAutoplayNext = true;
       audio.play().then(() => setPauseIcon()).catch(() => {});
     } else {
+      shouldAutoplayNext = false;
       audio.pause();
       setPlayIcon();
     }
@@ -440,7 +451,7 @@
     offsets = times.map((_, i) => times.slice(0, i).reduce((a, b) => a + b, 0));
     totalDuration = times.reduce((a, b) => a + b, 0);
     drawMarkers();
-    loadTrack(0); // ✅ stays paused with triangle icon
+    loadTrack(0, false); // ✅ stays paused with triangle icon
   });
 
   function drawMarkers() {
@@ -452,17 +463,21 @@
     });
   }
 
+  // ✅ Update timeline progress
   audio.addEventListener("timeupdate", () => {
     const globalTime = offsets[currentIndex] + audio.currentTime;
     progress.style.width = `${(globalTime / totalDuration) * 100}%`;
+  });
 
-    if (audio.currentTime >= audio.duration && currentIndex < tracks.length - 1) {
-      // Auto-advance. If already playing, continue playing; if paused, stay paused.
-      const wasPlaying = !audio.paused;
-      loadTrack(currentIndex + 1);
-      if (wasPlaying) {
-        audio.play().then(() => setPauseIcon()).catch(() => {});
-      }
+  // ✅ NEW: when a track ends, auto-play the next one (if user started playback)
+  audio.addEventListener("ended", () => {
+    if (currentIndex < tracks.length - 1) {
+      currentIndex++;
+      loadTrack(currentIndex, shouldAutoplayNext);
+    } else {
+      // reached end of playlist
+      shouldAutoplayNext = false;
+      setPlayIcon();
     }
   });
 
@@ -471,13 +486,11 @@
     const index = offsets.findIndex((o, i) => targetTime < o + durations[i]);
 
     const wasPlaying = !audio.paused;
-    loadTrack(index);
-    audio.currentTime = targetTime - offsets[index];
+    // keep the autoplay chain consistent with the current state
+    shouldAutoplayNext = wasPlaying;
 
-    // Keep state: if was playing, keep playing after seek
-    if (wasPlaying) {
-      audio.play().then(() => setPauseIcon()).catch(() => {});
-    }
+    loadTrack(index, wasPlaying);
+    audio.currentTime = targetTime - offsets[index];
   }
 
   function handleSeek(clientX) {
@@ -530,7 +543,10 @@
   document.addEventListener("click", () => {
     if (!userHasInteracted) {
       userHasInteracted = true;
+
+      // Start playback + enable autoplay chain
       if (audio.paused) {
+        shouldAutoplayNext = true;
         audio.play().then(() => setPauseIcon()).catch(() => {});
       }
     }
@@ -540,4 +556,3 @@
 
 </body>
 </html>
-
