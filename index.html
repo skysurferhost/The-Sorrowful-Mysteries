@@ -321,12 +321,10 @@
 
 <body>
 
-<!-- Starts expanded -->
 <div class="player" id="player">
   <div class="player-panel" id="playerPanel">
     <div class="controls">
 
-      <!-- ✅ Controls that hide/show -->
       <div class="controls-main" id="controlsMain" style="display:flex; align-items:center; gap:10px;">
         <button class="btn" onclick="playPause(); event.stopPropagation();">
           <div class="play-icon" id="playIcon"></div>
@@ -345,13 +343,12 @@
             </svg>
           </button>
 
-          <input type="range" class="volume-slider"
+          <input id="volumeSlider" type="range" class="volume-slider"
             min="0" max="1" step="0.01" value="1"
             oninput="setVolume(this.value)">
         </div>
       </div>
 
-      <!-- ✅ Audio handle ALWAYS stays visible -->
       <div class="player-handle" id="playerHandle" aria-label="Toggle audio controls">
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
         <span class="label">Audio</span>
@@ -378,6 +375,7 @@
   const progress = document.getElementById("progress");
   const volIcon = document.getElementById("volIcon");
   const volumeContainer = document.getElementById("volumeContainer");
+  const volumeSliderEl = document.getElementById("volumeSlider");
   const player = document.getElementById("player");
   const playerHandle = document.getElementById("playerHandle");
   const controlsMain = document.getElementById("controlsMain");
@@ -386,14 +384,21 @@
   let currentIndex = 0;
   let dragging = false;
 
-  // ✅ track first user interaction for click-to-play
   let userHasInteracted = false;
-
-  // ✅ track whether we should autoplay next track
-  // (true if user has started playback)
   let shouldAutoplayNext = false;
 
-  // ✅ Hide controls helper (keeps handle visible)
+  /* ✅ SESSION LOUDNESS CONSISTENCY
+     HTMLAudioElement volume is a true gain multiplier (0–1).
+     To keep loudness consistent across tracks, we:
+     - store the current gain in rememberedVolume
+     - re-apply it every time we load a new track
+  */
+  let rememberedVolume = 1;
+
+  // Apply initial remembered volume
+  audio.volume = rememberedVolume;
+  volumeSliderEl.value = String(rememberedVolume);
+
   function hideControls() {
     player.classList.add("controls-hidden");
     volumeContainer.classList.remove("open");
@@ -402,11 +407,9 @@
     player.classList.remove("controls-hidden");
   }
   function toggleControls() {
-    const hidden = player.classList.contains("controls-hidden");
-    hidden ? showControls() : hideControls();
+    player.classList.contains("controls-hidden") ? showControls() : hideControls();
   }
 
-  // ✅ Icon helpers
   function setPlayIcon() {
     playIcon.className = "play-icon";
     playIcon.innerHTML = "";
@@ -416,11 +419,20 @@
     playIcon.innerHTML = "<span></span><span></span>";
   }
 
-  // ✅ Load track (optionally autoplay)
+  function applyRememberedVolume() {
+    audio.volume = rememberedVolume;
+    volumeSliderEl.value = String(rememberedVolume);
+    volIcon.querySelector("#wave2").style.display = rememberedVolume < 0.4 ? "none" : "";
+    volIcon.querySelector("#wave1").style.display = rememberedVolume < 0.2 ? "none" : "";
+  }
+
   function loadTrack(i, autoplay = false) {
     currentIndex = i;
     audio.src = tracks[i].src;
     audio.load();
+
+    // ✅ enforce same loudness immediately on new track
+    applyRememberedVolume();
 
     if (autoplay) {
       audio.play().then(() => setPauseIcon()).catch(() => setPlayIcon());
@@ -429,7 +441,6 @@
     }
   }
 
-  // ✅ Play/pause button
   function playPause() {
     userHasInteracted = true;
 
@@ -451,7 +462,7 @@
     offsets = times.map((_, i) => times.slice(0, i).reduce((a, b) => a + b, 0));
     totalDuration = times.reduce((a, b) => a + b, 0);
     drawMarkers();
-    loadTrack(0, false); // ✅ stays paused with triangle icon
+    loadTrack(0, false);
   });
 
   function drawMarkers() {
@@ -463,19 +474,16 @@
     });
   }
 
-  // ✅ Update timeline progress
   audio.addEventListener("timeupdate", () => {
     const globalTime = offsets[currentIndex] + audio.currentTime;
     progress.style.width = `${(globalTime / totalDuration) * 100}%`;
   });
 
-  // ✅ NEW: when a track ends, auto-play the next one (if user started playback)
+  // ✅ Auto-advance uses loadTrack() which re-applies rememberedVolume
   audio.addEventListener("ended", () => {
     if (currentIndex < tracks.length - 1) {
-      currentIndex++;
-      loadTrack(currentIndex, shouldAutoplayNext);
+      loadTrack(currentIndex + 1, shouldAutoplayNext);
     } else {
-      // reached end of playlist
       shouldAutoplayNext = false;
       setPlayIcon();
     }
@@ -486,7 +494,6 @@
     const index = offsets.findIndex((o, i) => targetTime < o + durations[i]);
 
     const wasPlaying = !audio.paused;
-    // keep the autoplay chain consistent with the current state
     shouldAutoplayNext = wasPlaying;
 
     loadTrack(index, wasPlaying);
@@ -515,10 +522,11 @@
   timeline.addEventListener("touchmove", e => dragging && handleSeek(e.touches[0].clientX), { passive: true });
   window.addEventListener("touchend", () => dragging = false);
 
+  // ✅ Session-only loudness control (applies to real output + remembered for next track)
   function setVolume(v) {
-    audio.volume = v;
-    volIcon.querySelector("#wave2").style.display = v < 0.4 ? "none" : "";
-    volIcon.querySelector("#wave1").style.display = v < 0.2 ? "none" : "";
+    const vol = Math.min(Math.max(parseFloat(v), 0), 1);
+    rememberedVolume = vol;     // used for next track
+    applyRememberedVolume();    // apply immediately to current track
   }
 
   function toggleVolume(e) {
@@ -526,25 +534,22 @@
     volumeContainer.classList.toggle("open");
   }
 
-  // ✅ Clicking the "••• Audio" toggles main controls only (handle remains)
   playerHandle.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleControls();
   });
 
-  // ✅ Clicking inside controls should NOT hide them
   controlsMain.addEventListener("click", (e) => {
     e.stopPropagation();
   });
 
-  // ✅ Clicking anywhere on screen:
-  // 1) auto-start audio on first interaction
-  // 2) hide the controls (handle stays)
+  // click anywhere:
+  // 1) start audio on first interaction
+  // 2) hide controls
   document.addEventListener("click", () => {
     if (!userHasInteracted) {
       userHasInteracted = true;
 
-      // Start playback + enable autoplay chain
       if (audio.paused) {
         shouldAutoplayNext = true;
         audio.play().then(() => setPauseIcon()).catch(() => {});
@@ -552,6 +557,9 @@
     }
     hideControls();
   });
+
+  // Ensure icons reflect initial volume state
+  applyRememberedVolume();
 </script>
 
 </body>
