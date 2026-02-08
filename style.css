@@ -365,34 +365,22 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   position: absolute;
   left: 100%;
   top: 14px; /* ( 60 - (16 + 2*8) ) / 2 */
-
   margin-left: 3px;
-
   font-size: 16px;
-
   max-width: 300px;
-
   padding: 8px 10px;
-
   border-radius: 5px;
-
   background-color: rgb(58,68,84);
   background-color: rgba(58,68,84,0.8);
-
   color: #fff;
-
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-
   cursor: pointer;
-
   opacity: 0;
-
   -ms-transform: translateX(-8px);
   -webkit-transform: translateX(-8px);
   transform: translateX(-8px);
-
   -webkit-transition: -ms-transform 0.3s,
                       -webkit-transform 0.3s,
                       transform 0.3s,
@@ -467,8 +455,9 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   border-radius: 25px;
 }
 
+/* ✅ EXPANDED WIDTH: 260px → 340px */
 .desktop.no-touch .info-hotspot .info-hotspot-header:hover {
-  width: 260px;
+  width: 340px;
   border-radius: 5px;
   -webkit-transition: width 0.3s ease-in-out,
                       border-radius 0.3s ease-in-out;
@@ -476,9 +465,10 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               border-radius 0.3s ease-in-out;
 }
 
+/* ✅ EXPANDED WIDTH: 260px → 340px */
 .desktop .info-hotspot.visible .info-hotspot-header,
 .desktop.no-touch .info-hotspot.visible .info-hotspot-header:hover {
-  width: 260px;
+  width: 340px;
   border-radius: 5px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -519,9 +509,10 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               padding 0s 0.4s;
 }
 
+/* ✅ TITLE AREA WIDTH: 220px → 300px */
 .desktop .info-hotspot.visible .info-hotspot-title-wrapper,
 .desktop.no-touch .info-hotspot .info-hotspot-header:hover .info-hotspot-title-wrapper {
-  width: 220px;
+  width: 300px;
   padding: 0 5px;
   -webkit-transition: width 0s 0.4s,
                       padding 0s 0.4s;
@@ -546,9 +537,10 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   user-select: text;
 }
 
+/* ✅ CLOSE BUTTON POSITION: 260px → 340px */
 .info-hotspot .info-hotspot-close-wrapper {
   position: absolute;
-  left: 260px;
+  left: 340px;
   top: 0;
   height: 40px;
   width: 40px;
@@ -592,9 +584,10 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   margin: 15%;
 }
 
+/* ✅ BODY WIDTH: 300px → 380px */
 .info-hotspot .info-hotspot-text {
   position: absolute;
-  width: 300px;
+  width: 380px;
   height: auto;
   max-height: 200px;
   top: 40px;
@@ -605,7 +598,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   border-bottom-left-radius: 5px;
   overflow-y: auto;
   visibility: hidden;
-  /* rotate(90deg) causes transition flicker on Firefox 58 */
   -ms-transform: perspective(200px) rotateX(-89.999deg);
   -webkit-transform: perspective(200px) rotateX(-89.999deg);
   transform: perspective(200px) rotateX(-89.999deg);
@@ -642,7 +634,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               visibility 0s 0s;
 }
 
-/* Info hotspot modal */
+/* Info hotspot modal (unchanged) */
 
 .desktop .info-hotspot-modal {
   display: none;
@@ -726,7 +718,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 .info-hotspot-modal .info-hotspot-title {
   display: inline-block;
   vertical-align: middle;
-
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
@@ -794,7 +785,6 @@ body.view-control-buttons .viewControlButton {
   display: block;
 }
 
-/* Hide controls when width is too small */
 @media (max-width: 600px) {
   body.view-control-buttons .viewControlButton {
     display: none;
@@ -809,22 +799,9 @@ body.view-control-buttons .viewControlButton {
   height: 30px;
 }
 
-/* Center is at margin-left: -20px */
-.viewControlButton-1 {
-  margin-left: -145px;
-}
-.viewControlButton-2 {
-  margin-left: -95px;
-}
-.viewControlButton-3 {
-  margin-left: -45px;
-}
-.viewControlButton-4 {
-  margin-left: 5px;
-}
-.viewControlButton-5 {
-  margin-left: 55px;
-}
-.viewControlButton-6 {
-  margin-left: 105px;
-}
+.viewControlButton-1 { margin-left: -145px; }
+.viewControlButton-2 { margin-left: -95px; }
+.viewControlButton-3 { margin-left: -45px; }
+.viewControlButton-4 { margin-left: 5px; }
+.viewControlButton-5 { margin-left: 55px; }
+.viewControlButton-6 { margin-left: 105px; }
