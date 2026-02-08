@@ -437,10 +437,11 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   opacity: 1;
 }
 
+/* ✅ Taller header */
 .info-hotspot .info-hotspot-header {
   width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  height: 52px;                 /* was 40px */
+  border-radius: 26px;          /* was 20px */
   background-color: rgb(103,115,131);
   cursor: pointer;
   -webkit-transition: width 0.3s ease-in-out 0.5s,
@@ -449,13 +450,14 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               border-radius 0.3s ease-in-out 0.5s;
 }
 
+/* ✅ Taller mobile header */
 .mobile .info-hotspot .info-hotspot-header {
   width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  height: 60px;                 /* was 50px */
+  border-radius: 30px;          /* was 25px */
 }
 
-/* ✅ EXPANDED WIDTH: 260px → 340px */
+/* Expanded widths kept the same as your last version */
 .desktop.no-touch .info-hotspot .info-hotspot-header:hover {
   width: 340px;
   border-radius: 5px;
@@ -465,7 +467,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               border-radius 0.3s ease-in-out;
 }
 
-/* ✅ EXPANDED WIDTH: 260px → 340px */
 .desktop .info-hotspot.visible .info-hotspot-header,
 .desktop.no-touch .info-hotspot.visible .info-hotspot-header:hover {
   width: 340px;
@@ -479,14 +480,15 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               border-radius 0.3s ease-in-out;
 }
 
+/* ✅ Match icon wrapper to taller header */
 .info-hotspot .info-hotspot-icon-wrapper {
   width: 40px;
-  height: 40px;
+  height: 52px;                 /* was 40px */
 }
 
 .mobile .info-hotspot .info-hotspot-icon-wrapper {
   width: 50px;
-  height: 50px;
+  height: 60px;                 /* was 50px */
 }
 
 .info-hotspot .info-hotspot-icon {
@@ -495,12 +497,13 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   margin: 5%;
 }
 
+/* ✅ Match title wrapper height to taller header */
 .info-hotspot .info-hotspot-title-wrapper {
   position: absolute;
   left: 40px;
   top: 0;
   width: 0;
-  height: 40px;
+  height: 52px;                 /* was 40px */
   padding: 0;
   overflow: hidden;
   -webkit-transition: width 0s 0.4s,
@@ -509,7 +512,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               padding 0s 0.4s;
 }
 
-/* ✅ TITLE AREA WIDTH: 220px → 300px */
 .desktop .info-hotspot.visible .info-hotspot-title-wrapper,
 .desktop.no-touch .info-hotspot .info-hotspot-header:hover .info-hotspot-title-wrapper {
   width: 300px;
@@ -537,12 +539,12 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   user-select: text;
 }
 
-/* ✅ CLOSE BUTTON POSITION: 260px → 340px */
+/* ✅ Close button aligned to taller header */
 .info-hotspot .info-hotspot-close-wrapper {
   position: absolute;
   left: 340px;
   top: 0;
-  height: 40px;
+  height: 52px;                 /* was 40px */
   width: 40px;
   border-top-right-radius: 5px;
   background-color: rgb(78,88,104);
@@ -584,13 +586,13 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   margin: 15%;
 }
 
-/* ✅ BODY WIDTH: 300px → 380px */
+/* ✅ Text box starts below the taller header */
 .info-hotspot .info-hotspot-text {
   position: absolute;
   width: 380px;
   height: auto;
   max-height: 200px;
-  top: 40px;
+  top: 52px;                    /* was 40px */
   left: 0;
   padding: 10px;
   background-color: rgb(58,68,84);
