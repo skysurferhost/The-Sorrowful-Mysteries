@@ -1,3 +1,5 @@
+/* COPY/REPLACE ENTIRE CSS (fixed + auto-wrap scene title + beautiful mobile scaling) */
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -51,8 +53,9 @@ a, a:hover, a:active, a:visited {
   text-align: center;
 }
 
+/* ✅ Give mobile more height so 2-line title fits nicely */
 .mobile #titleBar {
-  height: 50px;
+  height: 50px;   /* align with buttons */
   right: 50px;
 }
 
@@ -74,16 +77,26 @@ body.multiple-scenes.mobile #titleBar {
   left: 50px;
 }
 
+/* ✅ Scene title: auto-wrap (2 lines), responsive scaling, no ellipsis */
 #titleBar .sceneName {
   width: 100%;
   height: 100%;
-  line-height: 30px;
-  padding: 5px;
-  background-color: rgb(58,68,84);
+  padding: 6px 10px;
+
+  font-size: clamp(14px, 2.2vw, 22px);
+  font-weight: 300;
+  line-height: 1.15;
+
   background-color: rgba(58,68,84,0.8);
+
+  /* wrap + clamp */
+  white-space: normal;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-overflow: unset;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;   /* desktop can show up to 2 lines */
+  line-clamp: 2;
 
   -moz-user-select: text;
   -webkit-user-select: text;
@@ -91,9 +104,25 @@ body.multiple-scenes.mobile #titleBar {
   user-select: text;
 }
 
+/* Mobile: keep title bar short and aligned, so show 1 line */
 .mobile #titleBar .sceneName {
-  line-height: 40px;
+  padding: 6px 10px;
+  -webkit-line-clamp: 2;   /* ✅ align height with buttons */
+  line-clamp: 2;
 }
+
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Mobile fine-tuning */
+.mobile #titleBar .sceneName {
+  padding: 8px 10px;
+}
+
+/* ---------- Fullscreen Toggle ---------- */
 
 #fullscreenToggle {
   display: none;
@@ -129,21 +158,13 @@ body.fullscreen-enabled #fullscreenToggle {
   right: 10px;
 }
 
-#fullscreenToggle .icon.on {
-  display: none;
-}
+#fullscreenToggle .icon.on { display: none; }
+#fullscreenToggle .icon.off { display: block; }
 
-#fullscreenToggle .icon.off {
-  display: block;
-}
+#fullscreenToggle.enabled .icon.on { display: block; }
+#fullscreenToggle.enabled .icon.off { display: none; }
 
-#fullscreenToggle.enabled .icon.on {
-  display: block;
-}
-
-#fullscreenToggle.enabled .icon.off {
-  display: none;
-}
+/* ---------- Autorotate Toggle ---------- */
 
 #autorotateToggle {
   display: block;
@@ -184,21 +205,13 @@ body.fullscreen-enabled.mobile #autorotateToggle {
   right: 10px;
 }
 
-#autorotateToggle .icon.on {
-  display: none;
-}
+#autorotateToggle .icon.on { display: none; }
+#autorotateToggle .icon.off { display: block; }
 
-#autorotateToggle .icon.off {
-  display: block;
-}
+#autorotateToggle.enabled .icon.on { display: block; }
+#autorotateToggle.enabled .icon.off { display: none; }
 
-#autorotateToggle.enabled .icon.on {
-  display: block;
-}
-
-#autorotateToggle.enabled .icon.off {
-  display: none;
-}
+/* ---------- Scene List Toggle ---------- */
 
 #sceneListToggle {
   position: absolute;
@@ -237,21 +250,13 @@ body.fullscreen-enabled.mobile #autorotateToggle {
   right: 10px;
 }
 
-#sceneListToggle .icon.on {
-  display: none;
-}
+#sceneListToggle .icon.on { display: none; }
+#sceneListToggle .icon.off { display: block; }
 
-#sceneListToggle .icon.off {
-  display: block;
-}
+#sceneListToggle.enabled .icon.on { display: block; }
+#sceneListToggle.enabled .icon.off { display: none; }
 
-#sceneListToggle.enabled .icon.on {
-  display: block;
-}
-
-#sceneListToggle.enabled .icon.off {
-  display: none;
-}
+/* ---------- Scene List ---------- */
 
 #sceneList {
   position: absolute;
@@ -330,11 +335,12 @@ body.fullscreen-enabled.mobile #autorotateToggle {
 }
 
 /* Hide scene list when only a single scene exists */
-body.single-scene #sceneList, body.single-scene #sceneListToggle {
+body.single-scene #sceneList,
+body.single-scene #sceneListToggle {
   display: none;
 }
 
-/* Link hotspot */
+/* ---------- Link hotspot ---------- */
 
 .link-hotspot {
   width: 60px;
@@ -403,22 +409,14 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 }
 
 /* Prevent tooltip from triggering */
-.link-hotspot-tooltip {
-  pointer-events: none;
-}
-.no-touch .link-hotspot:hover .link-hotspot-tooltip {
-  pointer-events: all;
-}
+.link-hotspot-tooltip { pointer-events: none; }
+.no-touch .link-hotspot:hover .link-hotspot-tooltip { pointer-events: all; }
 
 /* Fallback mode without pointer-events (IE8-10) */
-.tooltip-fallback .link-hotspot-tooltip {
-  display: none;
-}
-.no-touch .tooltip-fallback .link-hotspot:hover .link-hotspot-tooltip {
-  display: block;
-}
+.tooltip-fallback .link-hotspot-tooltip { display: none; }
+.no-touch .tooltip-fallback .link-hotspot:hover .link-hotspot-tooltip { display: block; }
 
-/* Info hotspot */
+/* ---------- Info hotspot ---------- */
 
 .info-hotspot {
   line-height: 1.2em;
@@ -440,8 +438,8 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 /* ✅ Taller header */
 .info-hotspot .info-hotspot-header {
   width: 40px;
-  height: 52px;                 /* was 40px */
-  border-radius: 26px;          /* was 20px */
+  height: 52px;
+  border-radius: 26px;
   background-color: rgb(103,115,131);
   cursor: pointer;
   -webkit-transition: width 0.3s ease-in-out 0.5s,
@@ -453,8 +451,8 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 /* ✅ Taller mobile header */
 .mobile .info-hotspot .info-hotspot-header {
   width: 50px;
-  height: 60px;                 /* was 50px */
-  border-radius: 30px;          /* was 25px */
+  height: 60px;
+  border-radius: 30px;
 }
 
 /* Expanded widths kept the same as your last version */
@@ -483,12 +481,12 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 /* ✅ Match icon wrapper to taller header */
 .info-hotspot .info-hotspot-icon-wrapper {
   width: 40px;
-  height: 52px;                 /* was 40px */
+  height: 52px;
 }
 
 .mobile .info-hotspot .info-hotspot-icon-wrapper {
   width: 50px;
-  height: 60px;                 /* was 50px */
+  height: 60px;
 }
 
 .info-hotspot .info-hotspot-icon {
@@ -503,7 +501,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   left: 40px;
   top: 0;
   width: 0;
-  height: 52px;                 /* was 40px */
+  height: 52px;
   padding: 0;
   overflow: hidden;
   -webkit-transition: width 0s 0.4s,
@@ -532,7 +530,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 .info-hotspot .info-hotspot-title {
   display: inline-block;
   vertical-align: middle;
-
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
@@ -544,7 +541,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   position: absolute;
   left: 340px;
   top: 0;
-  height: 52px;                 /* was 40px */
+  height: 52px;
   width: 40px;
   border-top-right-radius: 5px;
   background-color: rgb(78,88,104);
@@ -592,7 +589,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   width: 380px;
   height: auto;
   max-height: 200px;
-  top: 52px;                    /* was 40px */
+  top: 52px;
   left: 0;
   padding: 10px;
   background-color: rgb(58,68,84);
@@ -636,11 +633,9 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               visibility 0s 0s;
 }
 
-/* Info hotspot modal (unchanged) */
+/* ---------- Info hotspot modal ---------- */
 
-.desktop .info-hotspot-modal {
-  display: none;
-}
+.desktop .info-hotspot-modal { display: none; }
 
 .info-hotspot-modal {
   top: 0;
@@ -769,7 +764,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   transition: opacity 0.3s ease-in-out 0.4s;
 }
 
-/* View control buttons */
+/* ---------- View control buttons ---------- */
 
 .viewControlButton {
   display: none;
@@ -783,14 +778,10 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   background-color: rgba(103,115,131,0.8);
 }
 
-body.view-control-buttons .viewControlButton {
-  display: block;
-}
+body.view-control-buttons .viewControlButton { display: block; }
 
 @media (max-width: 600px) {
-  body.view-control-buttons .viewControlButton {
-    display: none;
-  }
+  body.view-control-buttons .viewControlButton { display: none; }
 }
 
 .viewControlButton .icon {
@@ -807,3 +798,39 @@ body.view-control-buttons .viewControlButton {
 .viewControlButton-4 { margin-left: 5px; }
 .viewControlButton-5 { margin-left: 55px; }
 .viewControlButton-6 { margin-left: 105px; }
+
+/* ✅ MOBILE FIX: true vertical + horizontal centering for 1-line titles
+   (and still allows up to 2 lines without breaking centering) */
+@media (max-width: 768px) {
+
+  /* keep title bar aligned with buttons */
+  .mobile #titleBar {
+    height: 50px;
+    right: 50px;
+  }
+
+  .mobile #titleBar .sceneName {
+    /* override clamp layout that breaks centering */
+    display: flex !important;
+    -webkit-box-orient: initial !important;
+    -webkit-line-clamp: unset !important;
+
+    align-items: center !important;      /* vertical center ✅ */
+    justify-content: center !important;  /* horizontal center ✅ */
+    text-align: center !important;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 8px 12px !important;
+    line-height: 1.7 !important;
+
+    /* allow wrapping, but don't cut mid-word */
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+
+    /* limit to ~2 lines while still centered */
+    overflow: hidden !important;
+    max-height: calc(1.7em * 2 + 2px) !important;
+  }
