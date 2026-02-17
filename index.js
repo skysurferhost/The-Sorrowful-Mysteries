@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Google Inc. All rights reserved.
+ * Modifications Copyright 2026 Sky Surfer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +15,55 @@
  * limitations under the License.
  */
 'use strict';
+
+(function () {
+  // 1) Disable right-click menu
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  }, { capture: true });
+
+  // 2) Prevent dragging (images/links)
+  document.addEventListener('dragstart', function (e) {
+    const t = e.target;
+    if (!t) return;
+    const tag = (t.tagName || '').toLowerCase();
+    if (tag === 'img' || tag === 'a') e.preventDefault();
+  }, { capture: true });
+
+  // 3) Block common shortcuts
+  document.addEventListener('keydown', function (e) {
+    const key = (e.key || '').toLowerCase();
+    const ctrlOrCmd = e.ctrlKey || e.metaKey;
+
+    // Save / Print / View source / DevTools-ish keys
+    if (ctrlOrCmd && (key === 's' || key === 'p' || key === 'u')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    // F12 (DevTools)
+    if (e.key === 'F12') {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    // Ctrl+Shift+I / Cmd+Opt+I (DevTools), Ctrl+Shift+J (Console)
+    if (ctrlOrCmd && e.shiftKey && (key === 'i' || key === 'j')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, { capture: true });
+
+  // 4) Block copy/cut (optional — can be annoying)
+  document.addEventListener('copy', function (e) { e.preventDefault(); }, { capture: true });
+  document.addEventListener('cut', function (e) { e.preventDefault(); }, { capture: true });
+
+  // 5) Block text selection start (you already do user-select:none globally in CSS)
+  document.addEventListener('selectstart', function (e) { e.preventDefault(); }, { capture: true });
+})();
 
 (function() {
   var Marzipano = window.Marzipano;
