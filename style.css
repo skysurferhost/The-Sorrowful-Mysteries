@@ -22,11 +22,15 @@ html, body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* ✅ Makes desktop match iPhone-style font */
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
   font-size: 16px;
   background-color: #000;
   color: #fff;
 }
+
 
 a, a:hover, a:active, a:visited {
   text-decoration: none;
@@ -455,7 +459,7 @@ body.single-scene #sceneListToggle {
 
 /* Expanded widths kept the same as your last version */
 .desktop.no-touch .info-hotspot .info-hotspot-header:hover {
-  width: 340px;
+  width: 420px;
   border-radius: 5px;
   -webkit-transition: width 0.3s ease-in-out,
                       border-radius 0.3s ease-in-out;
@@ -465,7 +469,7 @@ body.single-scene #sceneListToggle {
 
 .desktop .info-hotspot.visible .info-hotspot-header,
 .desktop.no-touch .info-hotspot.visible .info-hotspot-header:hover {
-  width: 340px;
+  width: 420px;
   border-radius: 5px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -499,8 +503,8 @@ body.single-scene #sceneListToggle {
   left: 40px;
   top: 0;
   width: 0;
-  height: 52px;
-  padding: 0;
+  height: 53px;
+  padding: 0 8px 0 6px;
   overflow: hidden;
   -webkit-transition: width 0s 0.4s,
                       padding 0s 0.4s;
@@ -510,7 +514,7 @@ body.single-scene #sceneListToggle {
 
 .desktop .info-hotspot.visible .info-hotspot-title-wrapper,
 .desktop.no-touch .info-hotspot .info-hotspot-header:hover .info-hotspot-title-wrapper {
-  width: 300px;
+  width: 380px;
   padding: 0 5px;
   -webkit-transition: width 0s 0.4s,
                       padding 0s 0.4s;
@@ -537,9 +541,9 @@ body.single-scene #sceneListToggle {
 /* ✅ Close button aligned to taller header */
 .info-hotspot .info-hotspot-close-wrapper {
   position: absolute;
-  left: 340px;
+  left: 420px;
   top: 0;
-  height: 52px;
+  height: 53px;
   width: 40px;
   border-top-right-radius: 5px;
   background-color: rgb(78,88,104);
@@ -584,9 +588,9 @@ body.single-scene #sceneListToggle {
 /* ✅ Text box starts below the taller header */
 .info-hotspot .info-hotspot-text {
   position: absolute;
-  width: 380px;
+  width: 460px;
   height: auto;
-  max-height: 200px;
+  max-height: 300px;
   top: 52px;
   left: 0;
   padding: 10px;
