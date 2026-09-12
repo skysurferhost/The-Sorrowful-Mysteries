@@ -128,6 +128,28 @@
   // Set handler for autorotate toggle.
   autorotateToggleElement.addEventListener('click', toggleAutorotate);
 
+  // SKY_SURFER_SPACEBAR_AUTOROTATE_V1
+  document.addEventListener('keydown', function(event) {
+    if (!event || event.repeat || event.defaultPrevented) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+
+    var isSpace = event.code === 'Space' || event.key === ' ' || event.key === 'Spacebar';
+    if (!isSpace) return;
+
+    var target = event.target;
+    if (target) {
+      var tagName = String(target.tagName || '').toUpperCase();
+      if (target.isContentEditable ||
+          tagName === 'INPUT' || tagName === 'TEXTAREA' || tagName === 'SELECT' ||
+          tagName === 'BUTTON' || tagName === 'A') {
+        return;
+      }
+    }
+
+    event.preventDefault();
+    toggleAutorotate();
+  });
+
   // Set up fullscreen mode, if supported.
   if (screenfull.enabled && data.settings.fullscreenButton) {
     document.body.classList.add('fullscreen-enabled');
