@@ -1,0 +1,10 @@
+SKY SURFER TOUR CONTENT RIGHTS NOTICE
+
+© 2026 Sky Surfer. All rights reserved.
+
+Original photography, panorama imagery, thumbnails, audio, logos, branding, written content, and other original Sky Surfer media included in this tour are not licensed for reuse, copying, redistribution, republication, modification, sale, training datasets, or creation of derivative works without prior written permission from the applicable copyright owner.
+
+IMPORTANT OPEN-SOURCE NOTICE
+This notice does not replace, restrict, or alter the licenses of Marzipano or any other third-party/open-source components included with the tour. Marzipano remains licensed under the Apache License 2.0, and existing third-party copyright/license notices must remain intact.
+
+Technical note: publishing a tour on a public web host necessarily sends panorama image tiles and other assets to visitors' browsers. Browser-side copy deterrents can discourage casual saving but cannot make publicly served files impossible to retrieve or screenshot.

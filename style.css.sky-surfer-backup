@@ -113,7 +113,12 @@ body.multiple-scenes.mobile #titleBar {
   line-clamp: 2;
 }
 
-/* SKY SURFER v8.2: removed malformed legacy top-level user-select fragment. */
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 /* Mobile fine-tuning */
 .mobile #titleBar .sceneName {
   padding: 8px 10px;
@@ -367,7 +372,7 @@ body.single-scene #sceneListToggle {
 .link-hotspot-tooltip {
   position: absolute;
   left: 100%;
-  top: 14px;
+  top: 14px; /* ( 60 - (16 + 2*8) ) / 2 */
   margin-left: 3px;
   font-size: 16px;
   max-width: 300px;
@@ -384,12 +389,18 @@ body.single-scene #sceneListToggle {
   -ms-transform: translateX(-8px);
   -webkit-transform: translateX(-8px);
   transform: translateX(-8px);
-  -webkit-transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s, opacity 0.3s;
-  transition: -ms-transform 0.3s, -webkit-transform 0.3s, transform 0.3s, opacity 0.3s;
+  -webkit-transition: -ms-transform 0.3s,
+                      -webkit-transform 0.3s,
+                      transform 0.3s,
+                      opacity 0.3s;
+  transition: -ms-transform 0.3s,
+              -webkit-transform 0.3s,
+              transform 0.3s,
+              opacity 0.3s;
 }
 
-.mobile .link-hotspot-tooltip {
-  top: 19px;
+.mobile .link-hotspot {
+  top: 19px; /* ( 70 - (16 + 2*8) ) / 2 */
 }
 
 .no-touch .link-hotspot:hover .link-hotspot-tooltip {
@@ -399,8 +410,11 @@ body.single-scene #sceneListToggle {
   transform: translateX(0);
 }
 
+/* Prevent tooltip from triggering */
 .link-hotspot-tooltip { pointer-events: none; }
 .no-touch .link-hotspot:hover .link-hotspot-tooltip { pointer-events: all; }
+
+/* Fallback mode without pointer-events (IE8-10) */
 .tooltip-fallback .link-hotspot-tooltip { display: none; }
 .no-touch .tooltip-fallback .link-hotspot:hover .link-hotspot-tooltip { display: block; }
 
@@ -822,379 +836,3 @@ body.view-control-buttons .viewControlButton { display: block; }
     overflow: hidden !important;
     max-height: calc(1.7em * 2 + 2px) !important;
   }
-
-
-/* SKY SURFER v8.2: repaired 1 unterminated legacy CSS block. */
-}
-
-
-/* SKY_SURFER_TOOLS_BUILD_V8_4 */
-/* ================================================================
-   SKY_SURFER_PREVIEW_ENHANCER_V33
-   Isolated Sky Surfer destination preview.
-   It intentionally avoids Marzipano's .link-hotspot-tooltip selectors
-   so customized legacy CSS cannot crop or resize the generated 16:9 image.
-   ================================================================ */
-.ss-scene-preview-anchor {
-  position: absolute !important;
-  display: block !important;
-  left: 100% !important;
-  top: 50% !important;
-  bottom: auto !important;
-  width: 270px !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  margin: 0 0 0 12px !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  color: inherit !important;
-  white-space: normal !important;
-  text-overflow: clip !important;
-  overflow: visible !important;
-  pointer-events: none !important;
-  opacity: 1 !important;
-  box-sizing: border-box !important;
-  z-index: 20 !important;
-  -ms-transform: translateY(-50%) !important;
-  -webkit-transform: translateY(-50%) !important;
-  transform: translateY(-50%) !important;
-}
-
-/* Transparent pointer bridge between the navigation hotspot and the preview.
-   This keeps the visual gap while making it easier to reach the card. */
-.ss-scene-preview-anchor::before {
-  content: '' !important;
-  position: absolute !important;
-  right: 100% !important;
-  top: 0 !important;
-  width: 12px !important;
-  height: 100% !important;
-  background: transparent !important;
-  pointer-events: auto !important;
-}
-
-.ss-scene-preview-card {
-  display: block !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 6px !important;
-  border: 0 !important;
-  border-radius: 12px !important;
-  background: rgba(20,20,20,.94) !important;
-  color: #fff !important;
-  white-space: normal !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-  box-shadow: 0 6px 22px rgba(0,0,0,.45) !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  -ms-transform: translateX(-8px);
-  -webkit-transform: translateX(-8px);
-  transform: translateX(-8px);
-  -webkit-transition:
-    opacity .65s ease,
-    visibility 0s linear .65s,
-    -webkit-transform .42s ease !important;
-  transition:
-    opacity .65s ease,
-    visibility 0s linear .65s,
-    transform .42s ease !important;
-}
-
-.ss-scene-preview-media {
-  display: block !important;
-  position: relative !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  aspect-ratio: 16 / 9 !important;
-  height: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 8px !important;
-  overflow: hidden !important;
-  background: #111 !important;
-  box-sizing: border-box !important;
-}
-
-.ss-scene-preview-image {
-  display: block !important;
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  height: 100% !important;
-  min-height: 100% !important;
-  max-height: 100% !important;
-  aspect-ratio: auto !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-sizing: border-box !important;
-}
-
-.ss-scene-preview-title {
-  display: block !important;
-  width: auto !important;
-  height: auto !important;
-  margin: 0 !important;
-  padding: 7px 8px 5px !important;
-  color: #fff !important;
-  background: transparent !important;
-  font-size: 15px !important;
-  line-height: 1.2 !important;
-  text-align: center !important;
-  white-space: normal !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  overflow-wrap: anywhere !important;
-  unicode-bidi: plaintext;
-  box-sizing: border-box !important;
-}
-
-.link-hotspot {
-  touch-action: manipulation;
-}
-
-.touch .link-hotspot.preview-visible .ss-scene-preview-card,
-.mobile .link-hotspot.preview-visible .ss-scene-preview-card {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-}
-
-@media (hover: none), (pointer: coarse) {
-  .ss-scene-preview-anchor {
-    left: 50% !important;
-    top: auto !important;
-    bottom: calc(100% + 12px) !important;
-    width: min(230px, calc(100vw - 24px)) !important;
-    margin: 0 !important;
-    -ms-transform: translateX(-50%) !important;
-    -webkit-transform: translateX(-50%) !important;
-    transform: translateX(-50%) !important;
-  }
-
-  .ss-scene-preview-card {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    -ms-transform: translateY(8px);
-    -webkit-transform: translateY(8px);
-    transform: translateY(8px);
-  }
-
-  .link-hotspot.preview-visible .ss-scene-preview-card {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    -webkit-transition:
-      opacity .18s ease,
-      visibility 0s linear 0s,
-      -webkit-transform .18s ease !important;
-    transition:
-      opacity .18s ease,
-      visibility 0s linear 0s,
-      transform .18s ease !important;
-    -ms-transform: translateY(0);
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 430px) {
-  .ss-scene-preview-anchor {
-    width: min(230px, calc(100vw - 20px)) !important;
-  }
-  .ss-scene-preview-card {
-    padding: 5px !important;
-  }
-  .ss-scene-preview-title {
-    font-size: 13px !important;
-    padding: 6px 6px 4px !important;
-  }
-}
-
-
-/* Corrected v8.2 desktop behavior: physical mouse movement only. */
-@media (hover: hover) and (pointer: fine) {
-  .link-hotspot.ss-standard-preview-visible .ss-scene-preview-card {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    -webkit-transition:
-      opacity .18s ease,
-      visibility 0s linear 0s,
-      -webkit-transform .18s ease !important;
-    transition:
-      opacity .18s ease,
-      visibility 0s linear 0s,
-      transform .18s ease !important;
-    -ms-transform: translateX(0) !important;
-    -webkit-transform: translateX(0) !important;
-    transform: translateX(0) !important;
-  }
-}
-
-/* Navigation arrow style: Classic Marzipano */
-/* Information icon style: Original Marzipano */
-/* Fullscreen button style: Classic Marzipano */
-
-/* Keep Marzipano's normal title-bar look, but let its own bar background
-   continue behind the left and right controls across the full viewer width. */
-#titleBar {
-  left: 0 !important;
-  right: 0 !important;
-  width: auto !important;
-}
-.mobile #titleBar {
-  left:0 !important;
-  right:0 !important;
-  width:auto !important;
-  height:50px !important;
-  background:rgba(58,68,84,.80) !important;
-  background-color:rgba(58,68,84,.80) !important;
-  background-image:none !important;
-  box-sizing:border-box !important;
-}
-.mobile #titleBar .sceneName {
-  display:block !important;
-  position:absolute !important;
-  top:0 !important;
-  left:60px !important;
-  right:108px !important;
-  width:auto !important;
-  max-width:none !important;
-  height:50px !important;
-  min-height:50px !important;
-  line-height:50px !important;
-  margin:0 !important;
-  padding:0 6px !important;
-  text-indent:0 !important;
-  transform:none !important;
-  overflow:hidden !important;
-  text-overflow:ellipsis !important;
-  white-space:nowrap !important;
-  text-align:center !important;
-  direction:ltr !important;
-  box-sizing:border-box !important;
-  background:transparent !important;
-  background-color:transparent !important;
-  background-image:none !important;
-}
-
-
-
-/* SKY SURFER: reliable long scene-list scrolling on phones.
-   This is intentionally applied whether or not the optional modern
-   scene-list button is enabled. Marzipano keeps #sceneList fixed to the
-   viewer and scrolls the inner .scenes element. */
-.mobile #sceneList {
-  width: 100% !important;
-  height: 100% !important;
-  max-height: 100% !important;
-  left: -100% !important;
-  padding-top: 50px !important;
-  box-sizing: border-box !important;
-  overflow-x: hidden !important;
-  overflow-y: hidden !important;
-}
-.mobile #sceneList.enabled {
-  margin-left: 100% !important;
-}
-.mobile #sceneList .scenes {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-height: 100% !important;
-  min-height: 0 !important;
-  box-sizing: border-box !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  background: rgba(58,68,84,.80) !important;
-  background-color: rgba(58,68,84,.80) !important;
-  background-image: none !important;
-}
-
-
-/* Sky Surfer v8.2 robust idle interface.
-   Runtime JS marks standard and recognized legacy/custom controls with
-   .ss-idle-ui. Only opacity is animated; hotspot transforms remain untouched. */
-.ss-idle-ui {
-  -webkit-transition: opacity .24s ease !important;
-  transition: opacity .24s ease !important;
-}
-
-body.ss-nav-hotspots-idle .ss-idle-ui,
-body.ss-nav-hotspots-idle .link-hotspot,
-body.ss-nav-hotspots-idle #titleBar,
-body.ss-nav-hotspots-idle #sceneList,
-body.ss-nav-hotspots-idle #sceneListToggle,
-body.ss-nav-hotspots-idle #autorotateToggle,
-body.ss-nav-hotspots-idle #fullscreenToggle,
-body.ss-nav-hotspots-idle .viewControlButton,
-body.ss-nav-hotspots-idle #viewUp,
-body.ss-nav-hotspots-idle #viewDown,
-body.ss-nav-hotspots-idle #viewLeft,
-body.ss-nav-hotspots-idle #viewRight,
-body.ss-nav-hotspots-idle #viewIn,
-body.ss-nav-hotspots-idle #viewOut,
-body.ss-nav-hotspots-idle .ss-audio-player,
-body.ss-nav-hotspots-idle #player.player {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* Desktop pointer also disappears during the idle presentation state.
-   A genuine pointer move immediately removes the idle class and restores it. */
-body.ss-nav-hotspots-idle,
-body.ss-nav-hotspots-idle * {
-  cursor: none !important;
-}
-
-/* An opened information panel remains readable while ordinary navigation UI,
-   including an opened scene list, fades away. */
-body.ss-nav-hotspots-idle .info-hotspot,
-body.ss-nav-hotspots-idle .info-hotspot-modal {
-  opacity: 1 !important;
-}
-
-
-/* Clean transparent autorotate control. Keep Marzipano's original white video-style play/pause artwork. */
-#autorotateToggle { background:transparent !important; background-color:transparent !important; border:0 !important; box-shadow:none !important; top:0 !important; right:40px !important; width:40px !important; height:40px !important; padding:0 !important; box-sizing:border-box !important; }
-#fullscreenToggle { top:0 !important; right:0 !important; width:40px !important; height:40px !important; box-sizing:border-box !important; }
-.mobile #autorotateToggle { top:0 !important; right:50px !important; width:50px !important; height:50px !important; }
-.mobile #fullscreenToggle { top:0 !important; right:0 !important; width:50px !important; height:50px !important; }
-#autorotateToggle .icon { opacity:1 !important; visibility:visible !important; filter:drop-shadow(0 1px 2px rgba(0,0,0,.32)); }
-#autorotateToggle .icon.off { display:block; }
-#autorotateToggle .icon.on { display:none; }
-#autorotateToggle.enabled .icon.off { display:none; }
-#autorotateToggle.enabled .icon.on { display:block; }
-.no-touch #autorotateToggle:hover { background:rgba(20,28,38,.06) !important; border-radius:8px; }
-
-/* Sky Surfer casual image-copy protection */
-#pano, #pano canvas, #pano img, .ss-scene-preview-image {
-  -webkit-touch-callout: none !important;
-  -webkit-user-select: none !important;
-  user-select: none !important;
-}
-#pano img, .ss-scene-preview-image { -webkit-user-drag: none !important; user-drag: none !important; }
-
