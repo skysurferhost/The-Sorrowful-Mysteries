@@ -1178,29 +1178,45 @@ body.ss-nav-hotspots-idle .info-hotspot-modal {
 }
 
 
-/* Sky Surfer: Joyful Mysteries-style mobile scene titles.
-   Short titles stay vertically centered on one line; long titles wrap naturally to two lines. */
-.mobile #titleBar .sceneName {
-  display: flex !important;
-  -webkit-box-orient: initial !important;
-  -webkit-line-clamp: unset !important;
-  line-clamp: unset !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  height: 50px !important;
-  min-height: 50px !important;
-  max-height: 50px !important;
-  padding: 5px 8px !important;
-  line-height: 1.4 !important;
-  white-space: normal !important;
-  word-break: normal !important;
-  overflow-wrap: anywhere !important;
-  text-overflow: clip !important;
-  overflow: hidden !important;
-  text-align: center !important;
-  box-sizing: border-box !important;
-  unicode-bidi: plaintext;
+/* Sky Surfer: Joyful Mysteries-style PHONE title wrapping.
+   Desktop stays unchanged. Phone titles use the same readable behavior as the
+   Joyful Mysteries project: one centered line when it fits, otherwise a centered
+   second line instead of an ellipsis. */
+@media (max-width: 768px) {
+  .mobile #titleBar {
+    height: 50px !important;
+  }
+
+  .mobile #titleBar .sceneName {
+    /* Override Marzipano's normal nowrap/ellipsis title treatment. */
+    display: flex !important;
+    -webkit-box-orient: initial !important;
+    -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+
+    /* Keep the existing left/right control clearance from the generated theme. */
+    width: auto !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    margin: 0 !important;
+    padding: 4px 8px !important;
+
+    /* Allow up to two readable lines; never replace the title with "...". */
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+    text-overflow: clip !important;
+    overflow: hidden !important;
+    line-height: 1.35 !important;
+
+    box-sizing: border-box !important;
+    unicode-bidi: plaintext;
+  }
 }
 /* Clean transparent autorotate control. Keep Marzipano's original white video-style play/pause artwork. */
 #autorotateToggle { background:transparent !important; background-color:transparent !important; border:0 !important; box-shadow:none !important; top:0 !important; right:40px !important; width:40px !important; height:40px !important; padding:0 !important; box-sizing:border-box !important; }
