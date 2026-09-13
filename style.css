@@ -1178,22 +1178,26 @@ body.ss-nav-hotspots-idle .info-hotspot-modal {
 }
 
 
-/* Sky Surfer: automatically wrap long mobile scene titles onto up to two lines.
-   This mirrors the Joyful Mysteries mobile title behavior instead of truncating with an ellipsis. */
+/* Sky Surfer: Joyful Mysteries-style mobile scene titles.
+   Short titles stay vertically centered on one line; long titles wrap naturally to two lines. */
 .mobile #titleBar .sceneName {
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  white-space: normal !important;
-  text-overflow: clip !important;
-  overflow: hidden !important;
-  overflow-wrap: anywhere !important;
-  line-height: 1.15 !important;
-  padding: 6px 8px !important;
+  display: flex !important;
+  -webkit-box-orient: initial !important;
+  -webkit-line-clamp: unset !important;
+  line-clamp: unset !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
   height: 50px !important;
   min-height: 50px !important;
   max-height: 50px !important;
+  padding: 5px 8px !important;
+  line-height: 1.4 !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+  text-overflow: clip !important;
+  overflow: hidden !important;
   text-align: center !important;
   box-sizing: border-box !important;
   unicode-bidi: plaintext;
